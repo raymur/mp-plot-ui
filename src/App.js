@@ -15,8 +15,7 @@ import Alert from '@mui/material/Alert';
 import axios from "axios";
 
 var Buffer = require('buffer/').Buffer
-const PORT = process.env.PORT
-const BACKEND_URL = 'http://127.0.0.1:' + PORT
+const BACKEND_URL = process.env.BACKEND_URL || 'http://127.0.0.1:8000';
 
 function App() {
   const [plot, setPlot] = useState(null);
@@ -34,8 +33,8 @@ function App() {
         'Content-Type': 'application/json'
       }
   axios.post(BACKEND_URL + '/plot/', {url}, {responseType: "arraybuffer"})
-  .then(response => {  
-  console.log(response);  
+  .then(response => {
+  console.log(response);
   setLoading(false);
   setPlot(Buffer.from(response.data, "binary").toString("base64"))
 }).catch(error => {setErrorMessage(Buffer.from(error.response.data, "utf-8").toString()); setLoading(false);});
@@ -56,7 +55,7 @@ function App() {
         justifyContent="center"
     >
       {
-        loading ? 
+        loading ?
         <Stack spacing={2} justifyContent="center" alignItems="center">
           <CircularProgress />
           <div>Generating plot</div>
