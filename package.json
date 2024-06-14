@@ -25,7 +25,7 @@
   "scripts": {
     "postinstall": "",
     "build": "react-scripts build",
-    "start": "serve -s mp-plot-ui/build",
+    "start": "serve -s build",
     "serve": "serve -s build",
     "dev": "react-scripts start",
     "test": "react-scripts test",
