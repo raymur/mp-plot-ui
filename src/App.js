@@ -15,6 +15,8 @@ import Alert from '@mui/material/Alert';
 import axios from "axios";
 
 var Buffer = require('buffer/').Buffer
+console.log(process.env)
+console.log(process.env.BACKEND_URL)
 const BACKEND_URL = process.env.BACKEND_URL || 'http://127.0.0.1:8000';
 
 function App() {
