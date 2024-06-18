@@ -25,7 +25,7 @@ function App() {
   const [errorMessage, setErrorMessage] = useState(null);
 
 
-  const  handleUrl = async (url) => {
+  const  handleUrl = async (url, config) => {
     setPlot(null);
     setLoading(true);
     setErrorMessage(null);
@@ -34,6 +34,7 @@ function App() {
         'Accept': 'image/png',
         'Content-Type': 'application/json'
       }
+      console.log(config)
   axios.post(BACKEND_URL + '/plot/', {url}, {responseType: "arraybuffer"})
   .then(response => {
   console.log(response);
