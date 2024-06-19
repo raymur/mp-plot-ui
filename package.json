@@ -20,14 +20,13 @@
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-scripts": "5.0.1",
-    "serve": "^14.2.3",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
     "postinstall": "",
     "build": "react-scripts build",
-    "start": "serve -s build",
-    "serve": "serve -s build",
+    "start": "node server.js",
+    "serve": "node server.js",
     "dev": "react-scripts start",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
