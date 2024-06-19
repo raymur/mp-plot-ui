@@ -1,7 +1,6 @@
 var express = require("express");
 var app = express();
 var port = process.env.PORT || 3000;
-app.use('/', express.static('build'));
 if(process.env.NODE_ENV === 'production') {
   app.use((req, res, next) => {
     if (req.header('x-forwarded-proto') !== 'https')
@@ -10,5 +9,6 @@ if(process.env.NODE_ENV === 'production') {
       next()
   })
 }
+app.use('/', express.static('build'));
 var server = app.listen(port);
 console.log("listening on " + port)
