@@ -35,7 +35,7 @@ function App() {
         'Content-Type': 'application/json'
       }
       console.log(config)
-  axios.post(BACKEND_URL + '/plot/', {url}, {responseType: "arraybuffer"})
+  axios.post(BACKEND_URL + '/plot/', {url, ...config}, {responseType: "arraybuffer"})
   .then(response => {
   console.log(response);
   setLoading(false);
@@ -56,6 +56,7 @@ function App() {
         my={2}
         alignItems="center"
         justifyContent="center"
+        style={{backgroundColor: "white"}}
     >
       {
         loading ?
