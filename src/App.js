@@ -12,6 +12,8 @@ import CircularProgress from '@mui/material/CircularProgress';
 import Stack from '@mui/material/Stack';
 import Box from '@mui/material/Box';
 import Alert from '@mui/material/Alert';
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import axios from "axios";
 
 var Buffer = require('buffer/').Buffer
@@ -25,7 +27,7 @@ function App() {
   const [errorMessage, setErrorMessage] = useState(null);
 
 
-  const  handleUrl = async (url) => {
+  const  handleUrl = async (url, config) => {
     setPlot(null);
     setLoading(true);
     setErrorMessage(null);
@@ -34,7 +36,8 @@ function App() {
         'Accept': 'image/png',
         'Content-Type': 'application/json'
       }
-  axios.post(BACKEND_URL + '/plot/', {url}, {responseType: "arraybuffer"})
+      console.log(config)
+  axios.post(BACKEND_URL + '/plot/', {url, ...config}, {responseType: "arraybuffer"})
   .then(response => {
   console.log(response);
   setLoading(false);
@@ -43,32 +46,34 @@ function App() {
 
   }
   return (
-    <div className="App">
-      <div className='Search-Header'>
-        <h1>Mountain Project Tick Plot</h1>
-        <MpForm urlValue={handleUrl} loading={loading}/>
+    <LocalizationProvider dateAdapter={AdapterDayjs}>
+      <div className="App">
+        <div className='Search-Header'>
+          <h1>Mountain Project Tick Plot</h1>
+          <MpForm urlValue={handleUrl} loading={loading}/>
+        </div>
+        <Box
+          height={500}
+          margin="auto"
+          my={2}
+          alignItems="center"
+          justifyContent="center"
+          style={{backgroundColor: "white"}}
+      >
+        {
+          loading ?
+          <Stack spacing={2} justifyContent="center" alignItems="center">
+            <CircularProgress />
+            <div>Generating plot</div>
+          </Stack>
+          : <img src={`data:image/png;charset=utf-8;base64,${plot}`} alt=''/>
+        }
+        {
+        errorMessage && <Alert severity="error">{errorMessage}</Alert>
+        }
+        </Box>
       </div>
-      <Box
-        height={480}
-        width={640}
-        margin="auto"
-        my={2}
-        alignItems="center"
-        justifyContent="center"
-    >
-      {
-        loading ?
-        <Stack spacing={2} justifyContent="center" alignItems="center">
-          <CircularProgress />
-          <div>Generating plot</div>
-        </Stack>
-        : <img src={`data:image/png;charset=utf-8;base64,${plot}`} alt=''/>
-      }
-      {
-       errorMessage && <Alert severity="error">{errorMessage}</Alert>
-      }
-      </Box>
-    </div>
+    </LocalizationProvider>
   );
 }
 
