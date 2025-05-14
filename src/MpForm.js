@@ -7,9 +7,10 @@ import PlotSettings from './PlotSettings';
 //   styles: {}
 // }
 
+const DEFAULT_URL = 'https://www.mountainproject.com/user/200683687/ray-murphy/'  
 
 function MpForm({urlValue, loading}) {
-    const [url, setUrl] = useState('');
+    const [url, setUrl] = useState(DEFAULT_URL);
     const [config, setConfig] = useState({});
 
     const updateConfig = (update) => {setConfig({...config, ...update});}
@@ -27,6 +28,7 @@ function MpForm({urlValue, loading}) {
         <label >
           <input 
             name="urlValue" 
+            defaultValue={url}
             placeholder="mountain project user url" 
             onChange={(e)=>setUrl(e.target.value)}/> 
         </label>
